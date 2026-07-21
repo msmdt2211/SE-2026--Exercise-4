@@ -38,6 +38,7 @@ public class Search {
    ///Retrieves Stores by their name and compares their prices for a specific Coffee
    /// Input Names need to be Stores in the List and both Stores need to sell coffeeType
    /// Returns the CoffeeStore Object with the Lower Price
+   // Compares two stores by the price of the given coffee type
    public CoffeStore compareByPrice(String Coffee1, String Coffee2, String coffeeType){
        CoffeStore store1 = stores.stream().filter(x -> x.getName().equals(Coffee1)).findFirst().get();
        CoffeStore store2 = stores.stream().filter(x -> x.getName().equals(Coffee2)).findFirst().get();
