@@ -49,4 +49,42 @@ public class SearchSteps {
         assertEquals(output.getName(), storeName);
     }
 
+    @Given("there is no CoffeShop with Name {string} registered in the System")
+    public void there_is_no_coffeshop_with_name(final String name) {
+        boolean exists = search.getAllStores().stream().anyMatch(s -> s.getName().equals(name));
+        assertFalse(exists);
+    }
+
+    @When("a CoffeShop with Name {string},Location {string} and returnpoint {booleanValue} is added to the System")
+    public void add_store(final String name, final String location, final boolean reuse) {
+        CoffeStore cs = new CoffeStore(name, org.campuscoffee.Location.valueOf(location.toUpperCase()), reuse);
+        search.addStore(cs);
+    }
+
+    @Then("{string} should be registered as a CoffeShop")
+    public void should_be_registered(final String name) {
+        boolean exists = search.getAllStores().stream().anyMatch(s -> s.getName().equals(name));
+        assertTrue(exists);
+    }
+
+    List<CoffeStore> results;
+
+    @When("the System searches for CoffeShops close to {string}")
+    public void search_close_to(final String location) {
+        results = search.getStoresClose(org.campuscoffee.Location.valueOf(location.toUpperCase()));
+    }
+
+    @Then("the result should contain {string} and {string}")
+    public void result_should_contain(final String name1, final String name2) {
+        List<String> names = results.stream().map(CoffeStore::getName).toList();
+        assertTrue(names.contains(name1));
+        assertTrue(names.contains(name2));
+    }
+
+    @Then("the result should not contain {string}")
+    public void result_should_not_contain(final String name) {
+        List<String> names = results.stream().map(CoffeStore::getName).toList();
+        assertFalse(names.contains(name));
+    }
+
 }

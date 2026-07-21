@@ -44,6 +44,6 @@ public class Search {
        if(Coffee1.equals(Coffee2)){
            return store1;
        }
-       return store1.getPrice(coffeeType) > store2.getPrice(coffeeType) ? store1 : store2;
+       return store1.getPrice(coffeeType) < store2.getPrice(coffeeType) ? store1 : store2;
    }
 }
